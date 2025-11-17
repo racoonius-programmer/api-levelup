@@ -16,7 +16,7 @@ public class CorsConfig {
                 registry.addMapping("/**") // Aplica a todos los endpoints
                         .allowedOrigins(
                                 "http://localhost:5173",   // acceso a vite
-                                "http://localhost:3000",   // (opcional)
+                                "http://localhost:8080",   // (opcional)
                                 "https://tu-frontend.com"  // Producción si es que lo subes
                         )
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
