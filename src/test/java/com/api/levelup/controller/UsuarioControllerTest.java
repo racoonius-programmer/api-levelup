@@ -33,10 +33,10 @@ class UsuarioControllerTest {
 
     @Test
     void testObtenerTodas() throws Exception {
-        Usuario u1 = new Usuario(1L, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
+        Usuario u1 = new Usuario(1, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
-        Usuario u2 = new Usuario(2L, "juanito", "juanito@duoc.cl", "juanito123", "2000-05-12", 
+        Usuario u2 = new Usuario(2, "juanito", "juanito@duoc.cl", "juanito123", "2000-05-12", 
                                "987654321", "Calle Secundaria 45", "Valparaíso", 
                                "Viña del Mar", "usuario", true, "/img/header/user-logo-generic-white-alt.png");
 
@@ -53,7 +53,7 @@ class UsuarioControllerTest {
         Usuario nuevo = new Usuario(null, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                   "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                   "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
-        Usuario guardado = new Usuario(1L, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
+        Usuario guardado = new Usuario(1, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                      "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                      "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
 
@@ -70,7 +70,7 @@ class UsuarioControllerTest {
 
     @Test
     void testObtenerPorIdExistente() throws Exception {
-        Usuario u = new Usuario(1L, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
+        Usuario u = new Usuario(1, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                               "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                               "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
         Mockito.when(usuarioService.obtenerUsuarioPorId(1L)).thenReturn(Optional.of(u));
@@ -90,7 +90,7 @@ class UsuarioControllerTest {
 
     @Test
     void testActualizarUsuario() throws Exception {
-        Usuario actualizado = new Usuario(3L, "maria", "maria@gmail.com", "maria123", "1995-09-20", 
+        Usuario actualizado = new Usuario(3, "maria", "maria@gmail.com", "maria123", "1995-09-20", 
                                         "555555555", "Av. Las Flores 12", "Región del Biobío", 
                                         "Concepción", "usuario", false, "/img/header/user-logo-generic-white-alt.png");
         Mockito.when(usuarioService.actualizarUsuario(eq(3L), any(Usuario.class))).thenReturn(actualizado);

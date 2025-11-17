@@ -33,7 +33,7 @@ class UsuarioServiceTest {
         Usuario usuario = new Usuario(null, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                     "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                     "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
-        Usuario usuarioGuardado = new Usuario(1L, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
+        Usuario usuarioGuardado = new Usuario(1, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                             "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                             "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
         when(usuarioRepository.save(usuario)).thenReturn(usuarioGuardado);
@@ -48,10 +48,10 @@ class UsuarioServiceTest {
 
     @Test
     void testListarUsuarios() {
-        Usuario u1 = new Usuario(2L, "juanito", "juanito@duoc.cl", "juanito123", "2000-05-12", 
+        Usuario u1 = new Usuario(2, "juanito", "juanito@duoc.cl", "juanito123", "2000-05-12", 
                                "987654321", "Calle Secundaria 45", "Valparaíso", 
                                "Viña del Mar", "usuario", true, "/img/header/user-logo-generic-white-alt.png");
-        Usuario u2 = new Usuario(3L, "maria", "maria@gmail.com", "maria123", "1995-09-20", 
+        Usuario u2 = new Usuario(3, "maria", "maria@gmail.com", "maria123", "1995-09-20", 
                                "555555555", "Av. Las Flores 12", "Región del Biobío", 
                                "Concepción", "usuario", false, "/img/header/user-logo-generic-white-alt.png");
         when(usuarioRepository.findAll()).thenReturn(Arrays.asList(u1, u2));
@@ -67,7 +67,7 @@ class UsuarioServiceTest {
 
     @Test
     void testObtenerUsuarioPorId() {
-        Usuario u1 = new Usuario(1L, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
+        Usuario u1 = new Usuario(1, "admin", "admin@gmail.com", "admin123", "1990-01-01", 
                                "123456789", "Av. Principal 100", "Región Metropolitana de Santiago", 
                                "Santiago", "admin", false, "/img/header/user-logo-generic-white-alt.png");
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(u1));
