@@ -12,7 +12,7 @@ import java.util.List;
  * Controlador REST para administrar pedidos.
  * Endpoints:
  * - POST /api/pedidos : crear pedido
- * - GET /api/pedidos : listar pedidos
+ * - GET /api/pedidos : listar pedidos (opcionalmente filtrados por usuarioId)
  * - GET /api/pedidos/{id} : obtener por id
  * - PUT /api/pedidos/{id} : actualizar pedido completo
  * - PATCH /api/pedidos/{id}/estado : actualizar sólo el estado
@@ -31,7 +31,10 @@ public class PedidoController {
     }
 
     @GetMapping
-    public List<Pedido> obtenerTodos() {
+    public List<Pedido> obtenerTodos(@RequestParam(required = false) Integer usuarioId) {
+        if (usuarioId != null) {
+            return pedidoService.obtenerPedidosPorClienteId(usuarioId);
+        }
         return pedidoService.listarPedidos();
     }
 

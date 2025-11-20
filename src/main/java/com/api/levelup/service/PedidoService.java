@@ -58,6 +58,16 @@ public class PedidoService {
         return opt;
     }
 
+    /** Obtiene todos los pedidos de un cliente específico */
+    public List<Pedido> obtenerPedidosPorClienteId(Integer clienteId) {
+        List<Pedido> lista = pedidoRepository.findByClienteId(clienteId);
+        // deserializar productosJson a lista en cada pedido
+        for (Pedido p : lista) {
+            populateProductosFromJson(p);
+        }
+        return lista;
+    }
+
     /** Actualiza un pedido existente. Vuelve a calcular el total y serializa productos. */
     public Pedido actualizarPedido(Integer id, Pedido pedido) {
         Pedido existente = pedidoRepository.findById(id)
