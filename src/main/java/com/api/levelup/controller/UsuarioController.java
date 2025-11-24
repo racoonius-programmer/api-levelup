@@ -4,9 +4,11 @@ import com.api.levelup.model.Usuario;
 import com.api.levelup.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -42,9 +44,28 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Elimina un usuario. Implementa validación de regla de negocio.
+     * No permite eliminar usuarios con pedidos activos.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        UsuarioService.eliminarUsuario(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        try {
+            UsuarioService.eliminarUsuario(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /**
+     * Verifica si un usuario puede ser eliminado.
+     * Útil para mostrar/ocultar botones de eliminación en el frontend.
+     */
+    @GetMapping("/{id}/puede-eliminar")
+    public ResponseEntity<Map<String, Boolean>> puedeEliminar(@PathVariable Long id) {
+        boolean puedeEliminar = UsuarioService.puedeEliminarUsuario(id);
+        return ResponseEntity.ok(Map.of("puedeEliminar", puedeEliminar));
     }
 }

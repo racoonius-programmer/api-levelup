@@ -4,9 +4,11 @@ import com.api.levelup.model.Productos;
 import com.api.levelup.service.ProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -42,10 +44,29 @@ public class ProductosController {
         }
     }
 
+    /**
+     * Elimina un producto. Implementa validación de regla de negocio.
+     * No permite eliminar productos que estén en pedidos activos.
+     */
     @DeleteMapping("/{codigo}")
-    public ResponseEntity<Void> eliminar(@PathVariable String codigo) {
-        productosService.eliminarProducto(codigo);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminar(@PathVariable String codigo) {
+        try {
+            productosService.eliminarProducto(codigo);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    /**
+     * Verifica si un producto puede ser eliminado.
+     * Útil para mostrar/ocultar botones de eliminación en el frontend.
+     */
+    @GetMapping("/{codigo}/puede-eliminar")
+    public ResponseEntity<Map<String, Boolean>> puedeEliminar(@PathVariable String codigo) {
+        boolean puedeEliminar = productosService.puedeEliminarProducto(codigo);
+        return ResponseEntity.ok(Map.of("puedeEliminar", puedeEliminar));
     }
 
     // Endpoints adicionales para búsquedas específicas
